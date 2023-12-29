@@ -496,17 +496,16 @@
                 </ul>
 
                 <ul class="mobile-menu">
-                    <?php if (isset($_SESSION['user'])): ?>
-                    <li><a href="<?= $base_url ?>user/dashboard">Tài khoản</a></li>
-                    <?php else: ?>
-                    <li><a href="<?= $base_url ?>user/login" class="login-link">Đăng nhập</a></li>
-                    <?php endif; ?>
                     <li><a href="<?= $base_url ?>page/contact">Liên hệ</a></li>
                     <li><a href="<?= $base_url ?>page/aboutUs">Về chúng tôi</a></li>
-                    <li><a href="<?= $base_url ?>user/wishlist">Yêu thích</a></li>
-                    <li><a href="<?= $base_url ?>page/gio-hang">Giỏ hàng</a></li>
+                    <li><a href="<?= $base_url ?>page/wishlist">Yêu thích</a></li>
                     <?php if (isset($_SESSION['user'])): ?>
+                    <li><a href="<?= $base_url ?>gio-hang">Giỏ hàng</a></li>
+                    <li><a href="<?= $base_url ?>user/dashboard">Tài khoản</a></li>
                     <li><a href="<?php $base_url ?>logout" class="login-link">Đăng xuất</a></li>
+                    <?php else: ?>
+                    <li><a href="<?= $base_url ?>user/login">Giỏ hàng</a></li>
+                    <li><a href="<?= $base_url ?>user/login" class="login-link">Đăng nhập</a></li>
                     <?php endif; ?>
                 </ul>
             </nav>
@@ -520,27 +519,42 @@
             </a>
         </div>
         <div class="sticky-info">
-            <a href="" class="">
-                <i class="icon-bars"></>Danh mục
+            <a href="<?= $base_url ?>page/shop" class="">
+                <i class="icon-wishlist-2"></i>Sản phẩm 
             </a>
         </div>
         <div class="sticky-info">
-            <a href="<?= $base_url ?>user/wishlist" class="">
+            <a href="<?= $base_url ?>page/wishlist" class="">
                 <i class="icon-wishlist-2"></i>Yêu thích 
             </a>
         </div>
+        <?php if (isset($_SESSION['user'])): ?>
         <div class="sticky-info">
             <a href="<?= $base_url ?>user/login" class="">
                 <i class="icon-user-2"></i>Tài khoản
             </a>
         </div>
         <div class="sticky-info">
-            <a href="<?= $base_url ?>page/gio-hang" class="">
+            <a href="<?= $base_url ?>gio-hang" class="">
                 <i class="icon-shopping-cart position-relative">
-                    <span class="cart-count badge-circle">3</span>
+                    <span class="cart-count badge-circle"><?=$count_cart?></span>
                 </i>Giỏ hàng
             </a>
         </div>
+        <?php else: ?>
+        <div class="sticky-info">
+            <a href="<?= $base_url ?>user/login" class="">
+                <i class="icon-shopping-cart position-relative">
+                    <span class="cart-count badge-circle">0</span>
+                </i>Giỏ hàng
+            </a>
+        </div>
+        <div class="sticky-info">
+            <a href="<?= $base_url ?>user/login" class="">
+                <i class="icon-user-2"></i>Đăng nhập
+            </a>
+        </div>
+        <?php endif; ?>
     </div>
 
     <!-- popup  -->
