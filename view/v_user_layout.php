@@ -492,16 +492,22 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="blog.html">Sản phẩm</a></li>
+                    <li><a href="<?= $base_url ?>page/shop">Sản phẩm</a></li>
                 </ul>
 
                 <ul class="mobile-menu">
-                    <li><a href="login.html">My Account</a></li>
-                    <li><a href="blog.html">Liên hệ</a></li>
-                    <li><a href="contact.html">Về chúng tôi</a></li>
-                    <li><a href="wishlist.html">My Wishlist</a></li>
-                    <li><a href="cart.html">Cart</a></li>
-                    <li><a href="login.html" class="login-link">Log In</a></li>
+                    <?php if (isset($_SESSION['user'])): ?>
+                    <li><a href="<?= $base_url ?>user/dashboard">Tài khoản</a></li>
+                    <?php else: ?>
+                    <li><a href="<?= $base_url ?>user/login" class="login-link">Đăng nhập</a></li>
+                    <?php endif; ?>
+                    <li><a href="<?= $base_url ?>page/contact">Liên hệ</a></li>
+                    <li><a href="<?= $base_url ?>page/aboutUs">Về chúng tôi</a></li>
+                    <li><a href="<?= $base_url ?>user/wishlist">Yêu thích</a></li>
+                    <li><a href="<?= $base_url ?>page/gio-hang">Giỏ hàng</a></li>
+                    <?php if (isset($_SESSION['user'])): ?>
+                    <li><a href="<?php $base_url ?>logout" class="login-link">Đăng xuất</a></li>
+                    <?php endif; ?>
                 </ul>
             </nav>
         </div>
@@ -510,29 +516,29 @@
     <div class="sticky-navbar">
         <div class="sticky-info">
             <a href="<?= $base_url ?>page/home">
-                <i class="icon-home"></i>Home
+                <i class="icon-home"></i>Trang chủ
             </a>
         </div>
         <div class="sticky-info">
             <a href="" class="">
-                <i class="icon-bars"></i>Categories
+                <i class="icon-bars"></>Danh mục
             </a>
         </div>
         <div class="sticky-info">
-            <a href="wishlist.html" class="">
-                <i class="icon-wishlist-2"></i>Wishlist
+            <a href="<?= $base_url ?>user/wishlist" class="">
+                <i class="icon-wishlist-2"></i>Yêu thích 
             </a>
         </div>
         <div class="sticky-info">
-            <a href="login.html" class="">
-                <i class="icon-user-2"></i>Account
+            <a href="<?= $base_url ?>user/login" class="">
+                <i class="icon-user-2"></i>Tài khoản
             </a>
         </div>
         <div class="sticky-info">
-            <a href="cart.html" class="">
+            <a href="<?= $base_url ?>page/gio-hang" class="">
                 <i class="icon-shopping-cart position-relative">
                     <span class="cart-count badge-circle">3</span>
-                </i>Cart
+                </i>Giỏ hàng
             </a>
         </div>
     </div>
