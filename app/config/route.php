@@ -1,6 +1,6 @@
 <?php
 use app\routing\route;
-define("BASE_URL","http://localhost/php2/asm/");
+define("BASE_URL","http://localhost/pro1014/");
 define("IMG_PRODUCT","upload/uploadSP/");
 define("IMG_PRODUCT_ADMIN","../upload/uploadSP/");
 Route::add('/', 'homeController@index');
