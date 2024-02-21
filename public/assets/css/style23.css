@@ -240,3 +240,42 @@ label.error {
 }
 
 /* toast end */
+.product_parents{
+  width: 100%;
+}
+.product_parents .product-col{
+  width: 70%;
+  display: flex;
+}
+.product_parents .product-col .product-title{
+  width: 100%;
+}
+.product_parents .price-col{
+  width: 100px;
+}
+.hoadontitle{
+  text-align: center;
+  margin-bottom: 20px;
+}
+.hoadontitle h3{
+  margin: 0;
+}
+.hoadonthongtin{
+  margin-bottom: 20px;
+}
+.hoadonthongtin h6{
+  margin: 10px 0 0 0;
+}
+.kyten{
+  margin: 20px;
+  display: flex;
+}
+.kyten-2{
+  width: 50%;
+  text-align: center;
+  height: 200px;
+}
+.kyten-2 h4{
+  margin: 0;
+}
+

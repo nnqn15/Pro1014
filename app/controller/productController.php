@@ -24,7 +24,7 @@ class productController extends baseController{
             $this->data["show_cart_for_user"]= $this->cart->show_cart_for_user($_SESSION['user']['MaTK']);
             $this->data["info_user"]= $this->user->user_getById($_SESSION['user']['MaTK']);
         }
-        $limit = 3;
+        $limit = 12;
         $keyword="";
         $MaDM=0;
         $MaDMC=0;
@@ -210,7 +210,11 @@ class productController extends baseController{
     }
     function update_status_cart(){
         $TongTien=$_POST['TongTien'];
-        $GiaKM=$_SESSION['coupon']['has']['GiaKM'];
+        if(isset($_SESSION['coupon']['has']['GiaKM'])){
+            $GiaKM=$_SESSION['coupon']['has']['GiaKM'];
+        }else{
+            $GiaKM=0;
+        }
         $HoVaTen=$_POST['HoVaTen'];
         $DiaChi=$_POST['DiaChi'];
         $SoDienThoai=$_POST['SoDienThoai'];
@@ -219,11 +223,10 @@ class productController extends baseController{
         if(isset($_SESSION['user'])){
             $MaTK = $_SESSION['user']['MaTK'];
             $show_cart_for_user=$this->cart->show_cart_for_user($MaTK);
-            $MaHD=$_SESSION['MaHD'];
-            unset($_SESSION['MaHD']);
+            print_r($show_cart_for_user);
+            $MaHD= $show_cart_for_user[0]['MaHD'];
         }else{
             $MaHD=$this->cart->cart_showbyphone($SoDienThoai);
-            echo $MaHD;
             $show_cart_for_user=$_SESSION['giohang'];
         }
         if(isset($_POST['method_pay'])&&$_POST['method_pay']=='vnpay'){
@@ -232,7 +235,9 @@ class productController extends baseController{
                 $MaSP = $key['MaSP'];
                 // $this->cart->update_quantity_by_checkout($SoLuongSP, $MaSP);
             }
-            header('location: '.BASE_URL.'app/vnpay_php/vnpay_create_payment.php?MaHD='.$_POST['MaHD'].'&amount='.$_POST['TongTien']);
+            $this->cart->update_inf_cart($MaHD,$HoVaTen,$DiaChi,$SoDienThoai,$Email);
+            header('Location: ' . BASE_URL . 'public/vnpay_php/vnpay_create_payment.php?MaHD=' . urlencode($MaHD) . '&amount=' . urlencode($TongTien));
+            exit;
         }else{
             if(!isset($_SESSION['user'])){
                 $this->cart->his_cart_nologin($TongTien,$GiaKM,$HoVaTen,$DiaChi,$SoDienThoai,$Email,$GhiChu);
@@ -249,9 +254,140 @@ class productController extends baseController{
                     $MaSP = $key['MaSP'];
                     $this->cart->update_quantity_by_checkout($SoLuongSP, $MaSP);
                 }
+                $this->cart->update_inf_cart($MaHD,$HoVaTen,$DiaChi,$SoDienThoai,$Email);
                 $this->cart->upate_status_cart($MaHD);
             }
             unset($_SESSION['coupon']);
+            $chitiethd=$this->pro->getproductByHD($MaHD);
+
+            $email = $Email;
+            $subject = "Xác nhận đơn hàng #".$MaHD;
+            $message = "<p>Cảm ơn bạn đã mua hàng. Đây là hóa đơn của bạn:</p>";
+            $message .= '<div class="order-content">
+            <div class="hoadontitle">
+                <h3>CHI TIẾT HÓA ĐƠN SỐ '. $MaHD .'</h3>
+                Ngày '.date('d', strtotime($chitiethd[0]['NgayLap'])) . ' tháng ' . date('m', strtotime($chitiethd[0]['NgayLap'])) . ' năm ' . date('Y', strtotime($chitiethd[0]['NgayLap'])).' <br>
+                <i>(Kèm theo hóa đơn số '. $MaHD .' ngày '.date('d', strtotime($chitiethd[0]['NgayLap'])) . ' tháng ' . date('m', strtotime($chitiethd[0]['NgayLap'])) . ' năm ' . date('Y', strtotime($chitiethd[0]['NgayLap'])).')</i>
+            </div>
+            <div class="hoadonthongtin">
+                <h6>Tên đơn vị bán hàng : Bé yêu shop</h6>
+                Địa chỉ: Tòa T, Công viên phần mềm Quang Trung, Quận 12, TP.HCM <br>
+                Mã số thuế: 15101008
+                <h6>Tên đơn vị mua hàng : '. $chitiethd[0]['HoVaTen'] .'</h6>
+                Địa chỉ : '. $chitiethd[0]['DiaChi'] .' <br>
+                Số điện thoại : 0'. $chitiethd[0]['SoDienThoai'] .'
+            </div>
+            <div class="order-table-container text-center">
+                <table class="table table-order text-left">
+                    <thead>
+                        <tr>
+                            <th class="order-id text-center">Ảnh sản phẩm</th>
+                            <th class="order-date">Tên sản phẩm</th>
+                            <th class="order-status text-center">Giá</th>
+                            <th class="order-price text-center">Số lượng</th>
+                            <th class="order-action text-center">Số tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+                        foreach ($chitiethd as $product){
+                            $message .='<tr>
+                            <td>
+                                <figure class="product-image-container m-auto">
+                                    <a href="'. BASE_URL .'product-detail&MaSP='. $product['MaSP'] .'" class="product-image">
+                                        <img src="'. BASE_URL .'public/upload/products/'. $product['AnhSP'] .'" alt="product">
+                                    </a>
+                                </figure>
+                            </td>
+                            <td>
+                                <h5 class="product-title">
+                                    <a href="'. BASE_URL .'product/detail/'. $product['MaSP'] .'">'. $product['TenSP'] .'</a>
+                                </h5>
+                            </td>';
+                            if (!$product['GiaGiam']){
+                                $message .='<td class="price-box text-center">'. number_format($product['Gia'], 0, ",", ".") .' VND</td>
+                                <td class="price-box text-center">'. $product['SoLuongSP'] .'</td>
+                                <td class="price-box text-center">'. number_format(($product['Gia'] * $product['SoLuongSP']), 0, ',', '.') .' VNĐ</td>';
+                            }else{
+                                $message .='<td class="price-box text-danger text-center">
+                                <del class="text-dark">
+                                    <p>'. number_format($product['Gia'], 0, ",", ".") .'VND</p>
+                                </del>
+                                <p>'. number_format($product['GiaGiam'], 0, ",", ".") .' VND</p>
+                            </td>
+                            <td class="price-box text-center">'. $product['SoLuongSP'] .'</td>
+                            <td class="price-box text-center">'. number_format(($product['GiaGiam'] * $product['SoLuongSP']), 0, ',', '.') .' VNĐ</td>';
+                            }
+
+                        $message .='</tr>
+                            <tr>
+                                <td>
+                                    <figure class="product-image-container m-auto">
+                                        <a href="'. BASE_URL .'product-detail&MaSP='. $product['MaSP'] .'" class="product-image">
+                                            <img src="'. BASE_URL .'public/upload/products/'. $product['AnhSP'] .'" alt="product">
+                                        </a>
+                                    </figure>
+                                </td>
+                                <td>
+                                    <h5 class="product-title">
+                                        <a href="'. BASE_URL .'product/detail/'. $product['MaSP'] .'">'. $product['TenSP'] .'</a>
+                                    </h5>
+                                </td>';
+                                if (!$product['GiaGiam']){
+                                    $message .='<td class="price-box text-center">'. number_format($product['Gia'], 0, ",", ".") .' VND</td>
+                                    <td class="price-box text-center">'. $product['SoLuongSP'] .'</td>
+                                    <td class="price-box text-center">'. number_format(($product['Gia'] * $product['SoLuongSP']), 0, ',', '.') .' VNĐ</td>';
+                                }else{
+                                    $message .='<td class="price-box text-danger text-center">
+                                    <del class="text-dark">
+                                        <p>'. number_format($product['Gia'], 0, ",", ".") .'VND</p>
+                                    </del>
+                                    <p>'. number_format($product['GiaGiam'], 0, ",", ".") .' VND</p>
+                                </td>
+                                <td class="price-box text-center">'. $product['SoLuongSP'] .'</td>
+                                <td class="price-box text-center">'. number_format(($product['GiaGiam'] * $product['SoLuongSP']), 0, ',', '.') .' VNĐ</td>';
+                                }
+                            }
+                            $message .='</tbody>
+                    <tfoot>';
+                        if ($chitiethd[0]['GiaKM'] != ""){
+                            $message .='<tr>
+                            <th colspan="3">
+                                Giá khuyến mãi
+                            </th>
+                            <th class="text-center" colspan="2">
+                                <span class="text-danger">'. number_format($chitiethd[0]['GiaKM'], 0, ",", ".") .' VND</span>
+                            </th>
+                        </tr>';
+                        }
+                        $message .='<tr>
+                            <th colspan="3">
+                                Tổng tiền
+                            </th>
+                            <th class="text-center" colspan="2">
+                                <span class="text-danger">'. number_format($chitiethd[0]['TongTien'], 0, ",", ".") .' VND</span>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="kyten">
+                <div class="kyten-2">
+                    <H4>NGƯỜI MUA HÀNG</H4>
+                    <i>(Ký, ghi rõ học tên, đóng dấu)</i>
+                </div>
+                <div class="kyten-2">
+                    <H4>NGƯỜI BÁN HÀNG</H4>
+                    <i>(Ký, ghi rõ học tên, đóng dấu)</i>
+                </div>
+            </div>
+        </div>'; // Thay bằng cách lấy dữ liệu từ class order-content
+
+            // Cài đặt header cho email
+            $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+            // Gửi email
+            mail($email, $subject, $message, $headers);
             header('location: '.BASE_URL.'hoadon/'.$MaHD);
         }
     }
@@ -266,7 +402,7 @@ class productController extends baseController{
                 $MaHD = $_POST['MaHD'];
                 $total = $_POST['total_cart'];
                 $this->cart->update_total_cart($total, $MaHD);
-                $this->data["total_cart"] = $this->cart->get_total($MaHD);
+                $this->data["total_cart"] = $total;
                 $this->titlepage = "Tiến hành thanh toán | Bé yêu shop";
                 $this->renderView("page_checkout", $this->titlepage, $this->data);
             } else {
@@ -299,6 +435,7 @@ class productController extends baseController{
         }else{
             $MaHD="";
         }
+        $this->data["MaHD"]=$MaHD;
         $this->data["chitiethd"]=$this->pro->getproductByHD($MaHD);
         $this->titlepage = "Chi tiết hóa đơn | Bé yêu shop";
         $this->renderView("page_nhanhang", $this->titlepage, $this->data);

@@ -1,25 +1,42 @@
 <?php
 require_once 'app/view/v_header.php';
-$chitiethd=$data["chitiethd"];
+$chitiethd = $data["chitiethd"];
+$MaHD = $data["MaHD"];
 ?>
-<div class="page-header">
-    <div class="container d-flex flex-column align-items-center">
-        <nav aria-label="breadcrumb" class="breadcrumb-nav">
-            <div class="container">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?=BASE_URL?>page/home">Trang Chủ</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Chi tiết hóa đơn
-                    </li>
-                </ol>
-            </div>
-        </nav>
-        <br>
-        <h1>CHI TIẾT HÓA ĐƠN</h1>
-    </div>
-</div>
+<style>
+    @media print {
+  /* Ẩn các phần tử không cần in */
+  body * {
+      visibility: hidden;
+  }
+  .order-content, .order-content * {
+      visibility: visible;
+  }
+  /* Căn giữa nội dung in */
+  .order-content {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+</style>
 <div class="m-auto p-3" style="width: 80%;">
+<button class="btn text-end" onclick="window.print()">In <i class="fa-solid fa-print"></i></button>
     <div class="order-content">
+        <div class="hoadontitle">
+            <h3>CHI TIẾT HÓA ĐƠN SỐ <?= $MaHD ?></h3>
+            Ngày <?=date('d', strtotime($chitiethd[0]['NgayLap'])) . ' tháng ' . date('m', strtotime($chitiethd[0]['NgayLap'])) . ' năm ' . date('Y', strtotime($chitiethd[0]['NgayLap']))?> <br>
+            <i>(Kèm theo hóa đơn số <?= $MaHD ?> ngày <?=date('d', strtotime($chitiethd[0]['NgayLap'])) . ' tháng ' . date('m', strtotime($chitiethd[0]['NgayLap'])) . ' năm ' . date('Y', strtotime($chitiethd[0]['NgayLap']))?>)</i>
+        </div>
+        <div class="hoadonthongtin">
+            <h6>Tên đơn vị bán hàng : Bé yêu shop</h6>
+            Địa chỉ: Tòa T, Công viên phần mềm Quang Trung, Quận 12, TP.HCM <br>
+            Mã số thuế: 15101008
+            <h6>Tên đơn vị mua hàng : <?= $chitiethd[0]['HoVaTen'] ?></h6>
+            Địa chỉ : <?= $chitiethd[0]['DiaChi'] ?> <br>
+            Số điện thoại : 0<?= $chitiethd[0]['SoDienThoai'] ?>
+        </div>
         <div class="order-table-container text-center">
             <table class="table table-order text-left">
                 <thead>
@@ -32,13 +49,12 @@ $chitiethd=$data["chitiethd"];
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($chitiethd as $product): ?>
+                    <?php foreach ($chitiethd as $product) : ?>
                         <tr>
                             <td>
                                 <figure class="product-image-container m-auto">
                                     <a href="<?= BASE_URL ?>product-detail&MaSP=<?= $product['MaSP'] ?>" class="product-image">
-                                        <img src="<?= BASE_URL ?>public/upload/products/<?= $product['AnhSP'] ?>"
-                                            alt="product">
+                                        <img src="<?= BASE_URL ?>public/upload/products/<?= $product['AnhSP'] ?>" alt="product">
                                     </a>
                                 </figure>
                             </td>
@@ -47,55 +63,63 @@ $chitiethd=$data["chitiethd"];
                                     <a href="<?= BASE_URL ?>product/detail/<?= $product['MaSP'] ?>"><?= $product['TenSP'] ?></a>
                                 </h5>
                             </td>
-                            <?php if(!$product['GiaGiam']): ?>
+                            <?php if (!$product['GiaGiam']) : ?>
                                 <td class="price-box text-center"><?= number_format($product['Gia'], 0, ",", ".") ?> VND</td>
-                                <td class="price-box text-center"><?=$product['SoLuongSP']?></td>
-                                <td class="price-box text-center"><?= number_format(($product['Gia']*$product['SoLuongSP']), 0,',','.')?> VNĐ</td>
-                            <?php else: ?>
+                                <td class="price-box text-center"><?= $product['SoLuongSP'] ?></td>
+                                <td class="price-box text-center"><?= number_format(($product['Gia'] * $product['SoLuongSP']), 0, ',', '.') ?> VNĐ</td>
+                            <?php else : ?>
                                 <td class="price-box text-danger text-center">
-                                    <del class="text-dark"><p><?= number_format($product['Gia'], 0, ",", ".") ?>VND</p></del>   
+                                    <del class="text-dark">
+                                        <p><?= number_format($product['Gia'], 0, ",", ".") ?>VND</p>
+                                    </del>
                                     <p><?= number_format($product['GiaGiam'], 0, ",", ".") ?> VND</p>
                                 </td>
-                                <td class="price-box text-center"><?=$product['SoLuongSP']?></td>
-                                <td class="price-box text-center"><?= number_format(($product['GiaGiam']*$product['SoLuongSP']), 0,',','.')?> VNĐ</td>
+                                <td class="price-box text-center"><?= $product['SoLuongSP'] ?></td>
+                                <td class="price-box text-center"><?= number_format(($product['GiaGiam'] * $product['SoLuongSP']), 0, ',', '.') ?> VNĐ</td>
                             <?php endif; ?>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
                 <tfoot>
+                    <?php if ($chitiethd[0]['GiaKM'] != "") : ?>
+                        <tr>
+                            <th colspan="3">
+                                Giá khuyến mãi
+                            </th>
+                            <th class="text-center" colspan="2">
+                                <span class="text-danger"><?= number_format($chitiethd[0]['GiaKM'], 0, ",", ".") ?> VND</span>
+                            </th>
+                        </tr>
+                    <?php endif; ?>
                     <tr>
-                        <th class="text-center" colspan="3">
-                            <h3>Trạng thái</h3>
+                        <th colspan="3">
+                            Tổng tiền
                         </th>
                         <th class="text-center" colspan="2">
-                            <?php
-                                switch($chitiethd[0]['TrangThai']) {
-                                    case 'chuan-bi':
-                                        echo '<span class="text-white p-1 bg-warning rounded">Người bán đang chuẩn bị</span>';
-                                        break;
-                                    case 'cho-giao':
-                                        echo '<span class="rounded text-white p-1" style="background: #007bff">Shipper đang đến</span>';
-                                        break;
-                                    case 'hoan-tat':
-                                        echo '<span class="rounded text-white p-1 bg-success">Giao thành công</span>';
-                                    break;
-                                    case 'khong-thanh-cong':
-                                        echo '<span class="rounded text-white p-1 bg-danger">Đơn hàng không thành công</span>';
-                                        break;
-                                }
-                            ?>
+                            <span class="text-danger"><?= number_format($chitiethd[0]['TongTien'], 0, ",", ".") ?> VND</span>
                         </th>
                     </tr>
                 </tfoot>
             </table>
-            <?php if($chitiethd[0]['GiaKM']!=""):?>
-            <h4>Giá khuyến mãi <span class="text-danger"><?=number_format($chitiethd[0]['GiaKM'], 0, ",", ".")?> VND</span></h4>
-            <?php endif;?>
-            <h2>Tổng tiền <span class="text-danger"><?=number_format($chitiethd[0]['TongTien'], 0, ",", ".")?> VND</span></h2>
-
-            <a href="<?=BASE_URL?>product" class="btn btn-dark m-2">Tiếp tục mua hàng</a>
+        </div>
+        <div class="kyten">
+            <div class="kyten-2">
+                <H4>NGƯỜI MUA HÀNG</H4>
+                <i>(Ký, ghi rõ học tên, đóng dấu)</i>
+            </div>
+            <div class="kyten-2">
+                <H4>NGƯỜI BÁN HÀNG</H4>
+                <i>(Ký, ghi rõ học tên, đóng dấu)</i>
+            </div>
         </div>
     </div>
 </div>
+<script>
+function exportToPdf() {
+    const doc = new jsPDF();
+    const contentToPrint = document.querySelector('.order-content').innerHTML;
+    doc.fromHTML(contentToPrint, 10, 10);
+    doc.save('hoa-don.pdf');
+}
+</script>
 <?php require_once 'app/view/v_footer.php'; ?>
-                

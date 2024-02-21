@@ -22,7 +22,7 @@ class cartModel{
     }
     
     function cart_showbyphone($SoDienThoai){
-        return $this->db-> pdo_query_value("SELECT MaHD FROM hoadon WHERE SoDienThoai=$SoDienThoai");
+        return $this->db-> pdo_query_value("SELECT MaHD FROM hoadon WHERE SoDienThoai=$SoDienThoai ORDER BY MaHD DESC LIMIT 1");
     }
     // thêm người dùng vào giỏ hàng
     function his_cart($MaTK)
@@ -83,10 +83,12 @@ class cartModel{
     function quantity_cart_max($MaSP) {
         return $this->db-> pdo_query_one("SELECT SoLuong,MaSP FROM sanpham WHERE MaSP = $MaSP");
     }
-    
+    function update_inf_cart($MaHD,$HoVaTen,$DiaChi,$SoDienThoai,$Email){
+        $this->db-> pdo_execute("UPDATE hoadon SET HoVaTen='$HoVaTen' ,DiaChi = '$DiaChi',SoDienThoai= '$SoDienThoai',Email='$Email' WHERE MaHD = $MaHD");
+    }
     // cập nhật trạng thái giỏ hàng
     function upate_status_cart($MaHD) {
-        return $this->db-> pdo_execute("UPDATE hoadon SET TrangThai = 'chuan-bi' WHERE MaHD = $MaHD");
+        $this->db-> pdo_execute("UPDATE hoadon SET TrangThai = 'chuan-bi' WHERE MaHD = $MaHD");
     }
     
     // hiển thị lịch sử giỏ hàng

@@ -4,6 +4,8 @@ RewriteBase /pro1014/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
+RewriteRule ^public/vnpay_php/(.*)/(.*)$ public/vnpay_php/$1/$2 [QSA,L]
+RewriteRule ^public/vnpay_php/(.*)$ public/vnpay_php/$1 [QSA,L]
 RewriteRule ^public/assets/(.*)/(.*)/(.*)$ public/assets/$1/$2/$3 [QSA,L]
 RewriteRule ^public/assets/(.*)/(.*)$ public/assets/$1/$2 [QSA,L]
 RewriteRule ^public/upload/(.*)$ public/upload/$1 [QSA,L]
@@ -11,7 +13,7 @@ RewriteRule ^public/assets/(.*)$ public/assets/$1 [QSA,L]
 RewriteRule ^(.*)/(.*)/(.*)$ index.php?url=$1/$2/$3 [QSA,L] 
 RewriteRule ^(.*)/(.*)$ index.php?url=$1/$2 [QSA,L]  
 RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]  
-RewriteRule ^app/vnpay_php/(.*)$ app/vnpay_php/$1 [QSA,L]
+
 # RewriteRule ^(.*)/chi-tiet-don-hang/(.*)$ index.php?mod=$1&act=nhanhang&MaHD=$2 [QSA,L]
 # RewriteRule ^chi-tiet-don-hang/(.*)$ index.php?mod=user&act=history&MaHD=$1 [QSA,L]
 # RewriteRule ^admin/(.*)/(.*)/(.*)/(.*)$ index.php?mod=admin&act=$1-$2&MaSP=$3&id=$4 [QSA,L]

@@ -1,8 +1,3 @@
-<?php 
-namespace app\model;
-use app\model\cartModel;
-require_once './app/config/route.php';?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,10 +10,10 @@ require_once './app/config/route.php';?>
     <meta name="author" content="">
     <title>VNPAY RESPONSE</title>
     <!-- Bootstrap core CSS -->
-    <link href="<?= BASE_URL ?>app/vnpay_php/assets/bootstrap.min.css" rel="stylesheet" />
+    <link href="http://localhost/pro1014/public/vnpay_php/assets/bootstrap.min.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
-    <link href="<?= BASE_URL ?>app/vnpay_php/assets/jumbotron-narrow.css" rel="stylesheet">
-    <script src="<?= BASE_URL ?>app/vnpay_php/assets/jquery-1.11.3.min.js"></script>
+    <link href="http://localhost/pro1014/public/vnpay_php/assets/jumbotron-narrow.css" rel="stylesheet">
+    <script src="http://localhost/pro1014/public/vnpay_php/assets/jquery-1.11.3.min.js"></script>
 </head>
 <style>
     body {
@@ -112,7 +107,7 @@ require_once './app/config/route.php';?>
     <!--Begin display -->
     <div class="container">
         <div class="header clearfix">
-            <img src="<?= BASE_URL ?>public/upload/payments/Logo-VNPAY-QR.jpg" alt="">
+            <img src="http://localhost/pro1014/public/upload/payments/Logo-VNPAY-QR.jpg" alt="">
             <h3 class="text-muted">THANH TOÁN QUA VÍ ĐIỆN TỬ VNPAY</h3>
         </div>
         <div class="table-responsive">
@@ -152,15 +147,11 @@ require_once './app/config/route.php';?>
                     <?php
                     if ($secureHash == $vnp_SecureHash) {
                         if ($_GET['vnp_ResponseCode'] == '00') {
-                            $cart=new cartModel;
-                            $cart->upate_status_cart($_GET['vnp_TxnRef']);
                             echo "<span style='color:blue'>GIAO DỊCH THÀNH CÔNG</span>";
                         } else {
                             echo "<span style='color:red'>GIAO DỊCH KhÔNG THÀNH CÔNG</span>";
                         }
                     } else {
-                        $cart=new cartModel;
-                        $cart->upate_status_cart($_GET['vnp_TxnRef']);
                         echo "<span style='color:red'>CHỮ KÍ HỢP LỆ</span>";
                     }
                     ?>
@@ -176,7 +167,7 @@ require_once './app/config/route.php';?>
         </footer>
     </div>
     <div class="page">
-        <h2><a href="<?=BASE_URL?>hoadon/<?=$_GET['vnp_TxnRef']?>">Xem chi tiết đơn hàng</a></h2>
+        <h2><a href="http://localhost/pro1014/hoadon/<?=$_GET['vnp_TxnRef']?>">Xem chi tiết đơn hàng</a></h2>
     </div>
 </body>
 

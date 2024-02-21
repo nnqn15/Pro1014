@@ -91,7 +91,7 @@ $show_cart_for_user=$data["show_cart_for_user"];
                             extract($value) ?>
                             <tr class="product_parents">
                                 <td class="product-col">
-                                    <h5 class="product-title text-title">
+                                    <h5 class="product-title">
                                         Tên sản phẩm:
                                         <?= $TenSP ?>
                                     </h5>
@@ -134,7 +134,7 @@ $show_cart_for_user=$data["show_cart_for_user"];
                             </td>
                             <td class="price-col">
                                 <span class="total_checkout">
-                                    <?= (isset($_POST['btn_cart'])) ? number_format($total_cart[0], 0, '.', '.'). "VNĐ" : '' ?>
+                                    <?= (isset($_POST['btn_cart'])) ? number_format($total_cart, 0, '.', '.'). "VNĐ" : '' ?>
                                 </span>
                             </td>
                         </tr>

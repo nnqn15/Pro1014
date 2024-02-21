@@ -102,7 +102,7 @@ class productModel{
     }
     function getproductByHD($MaHD)
     {
-        return $this->db-> pdo_query("SELECT AnhSP,TenSP,cthd.MaSP as MaSP,Gia,GiaGiam,SoLuongSP,TrangThai,TongTien,GiaKM FROM hoadon hd INNER JOIN chitiethoadon cthd ON hd.MaHD=cthd.MaHD INNER JOIN sanpham sp ON cthd.MaSP=sp.MaSP WHERE hd.MaHD=$MaHD;");
+        return $this->db-> pdo_query("SELECT AnhSP,TenSP,HoVaTen,DiaChi,SoDienThoai,NgayLap,cthd.MaSP as MaSP,Gia,GiaGiam,SoLuongSP,TrangThai,TongTien,GiaKM FROM hoadon hd INNER JOIN chitiethoadon cthd ON hd.MaHD=cthd.MaHD INNER JOIN sanpham sp ON cthd.MaSP=sp.MaSP WHERE hd.MaHD=$MaHD;");
     }
     function count_product()
     {

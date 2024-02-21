@@ -7,7 +7,7 @@ $product_shop = $data["product_shop"];
 $sotrang = $data["sotrang"];
 $proshow = new productModel;
 ?>
-<div class="category-banner-container">
+<!-- <div class="category-banner-container">
     <div class="category-banner">
         <div class="container">
             <div class="row align-items-center">
@@ -17,7 +17,7 @@ $proshow = new productModel;
                     <h3 class="ls-n-25 line-height-1 text-uppercase mb-0 ml-0">Lên đến 70%</h3>
                 </div>
                 <div class="col-md-4 text-center">
-                    <img src="<?= BASE_URL ?>public/upload/banners/category-banner.png" alt="banner" width="267" height="241">
+                    <img src="public/upload/banners/category-banner.png" alt="banner" width="267" height="241">
                 </div>
                 <div class="col-md-4 text-center text-md-left">
                     <a href="#" class="btn btn-link ml-0 p-0"><i>Xem ưu đãi của chúng tôi</i><i class="fa-solid fa-angles-right"></i></a>
@@ -25,7 +25,7 @@ $proshow = new productModel;
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
     <div class="container">

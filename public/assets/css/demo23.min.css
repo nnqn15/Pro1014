@@ -5149,7 +5149,6 @@ label {
 }
 
 .page-header {
-    padding: 3.5rem 0;
     color: #222529;
     background-color: #f4f4f4;
     text-align: center
@@ -17512,6 +17511,7 @@ aside .widget-info i {
 
 .product-category .category-content {
     position: absolute;
+    text-align: center;
     left: 25%;
     right: 25%;
     bottom: 0;
