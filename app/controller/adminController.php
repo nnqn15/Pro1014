@@ -52,11 +52,12 @@ class adminController extends baseController{
             if (isset($_POST['submit'])) {
                 $TenDM = $_POST['TenDM'];
                 $MaDMC = $_POST['MaDMC'];
-                $check_DM = $this->admin->admin_checkTenDM($TenDM);
+                $slug=$_POST['slug'];
+                $check_DM = $this->admin->admin_checkSlugDM($slug);
                 if ($check_DM) { //  bị trùng không thêm báo lỗi
-                    $_SESSION['loi'] = 'Không thể thêm vì mã <strong>' . $TenDM . '</strong> đã tồn tại! ';
+                    $_SESSION['loi'] = 'Không thể thêm vì slug <strong>' . $slug . '</strong> đã tồn tại! ';
                 } else { // Sai , ko trùng , thêm tài khoản
-                    $this->admin->danhmuc_add($TenDM, $MaDMC);
+                    $this->admin->danhmuc_add($TenDM, $MaDMC,$slug);
                     $_SESSION['thongbao'] = 'Đã thêm danh mục thành công!';
                     header('location: ' . BASE_URL . 'admin/category');
                 }

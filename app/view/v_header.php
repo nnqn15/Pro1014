@@ -295,12 +295,12 @@ if (isset($_SESSION['user'])) {
                                             if ($item_dmmuc['MaDMC'] == 0) {
                                         ?>
 
-                                                <li><a href="<?= BASE_URL ?>danhmuc/<?= create_slug($item_dmmuc['TenDM']) ?>"><?= $item_dmmuc['TenDM'] ?></a>
+                                                <li><a href="<?= BASE_URL ?>danhmuc/<?=$item_dmmuc['slug']?>"><?= $item_dmmuc['TenDM'] ?></a>
                                                     <ul>
                                                         <?php foreach ($danhmuc as $item_dm) {
                                                             if ($item_dm['MaDMC'] != 0 && $item_dm['MaDMC'] == $item_dmmuc['MaDM']) {
                                                         ?>
-                                                                <li><a href="<?= BASE_URL ?>danhmuc/<?= create_slug($item_dm['TenDM']) ?>"><?= $item_dm['TenDM'] ?></a></li>
+                                                                <li><a href="<?= BASE_URL ?>danhmuc/<?=$item_dm['slug']?>"><?= $item_dm['TenDM'] ?></a></li>
                                                         <?php
                                                             }
                                                         }

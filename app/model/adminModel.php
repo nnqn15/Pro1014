@@ -25,11 +25,11 @@ class adminModel{
     function admin_getALLDM(){
         return $this->db-> pdo_query("SELECT *FROM danhmuc ");
     }     
-    function admin_checkTenDM($TenDM) {
-        return $this->db-> pdo_query_one("SELECT * FROM danhmuc WHERE TenDM='$TenDM'");
+    function admin_checkSlugDM($slug) {
+        return $this->db-> pdo_query_one("SELECT * FROM danhmuc WHERE slug='$slug'");
     }
-    function danhmuc_add($TenDM,$MaDMC){
-        $this->db-> pdo_execute("INSERT INTO danhmuc(`TenDM`,`MaDMC`) VALUES('$TenDM',$MaDMC)");
+    function danhmuc_add($TenDM,$MaDMC,$slug){
+        $this->db-> pdo_execute("INSERT INTO danhmuc(`TenDM`,`MaDMC`,`slug`) VALUES('$TenDM',$MaDMC,$slug)");
     }
     function admin_update_DM($MaDM,$TenDM,$MaDMC){
         return $this->db-> pdo_execute("UPDATE danhmuc SET TenDM='$TenDM', MaDMC=$MaDMC WHERE MaDM=$MaDM");
