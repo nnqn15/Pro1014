@@ -7,7 +7,6 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
  *
  * @author CTT VNPAY
  */
-require_once("./app/config/route.php");
 
 $vnp_TxnRef = $_GET['MaHD']; //Mã hóa đơn
 $vnp_Amount = $_GET['amount']; // Số tiền thanh toán
