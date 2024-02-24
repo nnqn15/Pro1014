@@ -1,5 +1,4 @@
 <?php 
-namespace app\model;
 use app\model\productModel;
 use app\model\wishlistModel;
 require_once 'app/view/v_header.php'; 

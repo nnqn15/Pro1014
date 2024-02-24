@@ -203,7 +203,7 @@ class productModel{
     // Sản phẩm tương tự
     function product_same($MaSP, $id)
     {
-        return $this->db-> pdo_query("SELECT * FROM sanpham s INNER JOIN danhmuc dm ON s.MaDM = dm.MaDM WHERE MaSP!=$MaSP AND DM.MaDM =$id ORDER BY rand() LIMIT 5");
+        return $this->db-> pdo_query("SELECT * FROM sanpham s INNER JOIN danhmuc dm ON s.MaDM = dm.MaDM WHERE MaSP!=$MaSP AND dm.MaDM =$id ORDER BY rand() LIMIT 4");
     }
     function ratings_trungbinh($MaSP)
     {

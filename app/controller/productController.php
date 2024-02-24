@@ -240,6 +240,7 @@ class productController extends baseController
             print_r($show_cart_for_user);
             $MaHD = $show_cart_for_user[0]['MaHD'];
         } else {
+            $this->cart->his_cart_nologin($TongTien, $GiaKM, $HoVaTen, $DiaChi, $SoDienThoai, $Email, $GhiChu);
             $MaHD = $this->cart->cart_showbyphone($SoDienThoai);
             $show_cart_for_user = $_SESSION['giohang'];
         }
@@ -254,7 +255,6 @@ class productController extends baseController
             exit;
         } else {
             if (!isset($_SESSION['user'])) {
-                $this->cart->his_cart_nologin($TongTien, $GiaKM, $HoVaTen, $DiaChi, $SoDienThoai, $Email, $GhiChu);
                 foreach ($show_cart_for_user as $key) {
                     $SoLuongSP = $key['SoLuongSP'];
                     $MaSP = $key['MaSP'];
