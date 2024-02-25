@@ -326,14 +326,14 @@ class productController extends baseController
                     $mail->Body .= '<tr>
                             <td>
                                 <figure class="product-image-container m-auto">
-                                    <a href="' . BASE_URL . 'product-detail&MaSP=' . $product['MaSP'] . '" class="product-image">
-                                        <img src="' . BASE_URL . 'public/upload/products/' . $product['AnhSP'] . '" alt="product">
+                                    <a href="' . BASE_URL . 'product/detail/' . create_slug($product['TenSP']) . '" class="product-image">
+                                        <img src="' . BASE_URL . 'public/upload/products/' . $product['AnhSP'] . '" alt="product" width="100px">
                                     </a>
                                 </figure>
                             </td>
                             <td>
                                 <h5 class="product-title">
-                                    <a href="' . BASE_URL . 'product/detail/' . $product['MaSP'] . '">' . $product['TenSP'] . '</a>
+                                    <a href="' . BASE_URL . 'product/detail/' . create_slug($product['TenSP']) . '">' . $product['TenSP'] . '</a>
                                 </h5>
                             </td>';
                     if (!$product['GiaGiam']) {
@@ -351,34 +351,7 @@ class productController extends baseController
                             <td class="price-box text-center">' . number_format(($product['GiaGiam'] * $product['SoLuongSP']), 0, ',', '.') . ' VNĐ</td>';
                     }
 
-                    $mail->Body .= '</tr>
-                            <tr>
-                                <td>
-                                    <figure class="product-image-container m-auto">
-                                        <a href="' . BASE_URL . 'product-detail&MaSP=' . $product['MaSP'] . '" class="product-image">
-                                            <img src="' . BASE_URL . 'public/upload/products/' . $product['AnhSP'] . '" alt="product">
-                                        </a>
-                                    </figure>
-                                </td>
-                                <td>
-                                    <h5 class="product-title">
-                                        <a href="' . BASE_URL . 'product/detail/' . $product['MaSP'] . '">' . $product['TenSP'] . '</a>
-                                    </h5>
-                                </td>';
-                    if (!$product['GiaGiam']) {
-                        $mail->Body .= '<td class="price-box text-center">' . number_format($product['Gia'], 0, ",", ".") . ' VND</td>
-                                    <td class="price-box text-center">' . $product['SoLuongSP'] . '</td>
-                                    <td class="price-box text-center">' . number_format(($product['Gia'] * $product['SoLuongSP']), 0, ',', '.') . ' VNĐ</td>';
-                    } else {
-                        $mail->Body .= '<td class="price-box text-danger text-center">
-                                    <del class="text-dark">
-                                        <p>' . number_format($product['Gia'], 0, ",", ".") . 'VND</p>
-                                    </del>
-                                    <p>' . number_format($product['GiaGiam'], 0, ",", ".") . ' VND</p>
-                                </td>
-                                <td class="price-box text-center">' . $product['SoLuongSP'] . '</td>
-                                <td class="price-box text-center">' . number_format(($product['GiaGiam'] * $product['SoLuongSP']), 0, ',', '.') . ' VNĐ</td>';
-                    }
+                    $mail->Body .= '</tr>';
                 }
                 $mail->Body .= '</tbody>
                     <tfoot>';

@@ -1,5 +1,4 @@
 <?php 
-namespace app\model;
 use app\model\productModel;
 require_once 'app/view/v_header.php'; 
 $dsMoi=$data["dsMoi"];
@@ -17,36 +16,34 @@ $proshow=new productModel;
                             }
                         }
                     }">
-        <?php foreach ($showbanner as $item_banner): ?>
-            <div class="home-slide-1 banner">
-                <img class="slide-bg" src="<?=BASE_URL?>public/upload/banners/<?= $item_banner['AnhBanner'] ?>"
-                    alt="slider image" width="1200" height="400">
+        <div class="home-slide-1 banner">
+            <img class="slide-bg" src="<?=BASE_URL?>public/upload/banners/<?= $showbanner[0]['AnhBanner'] ?>"
+                alt="slider image" width="1200" height="400">
 
-                <div class="banner-layer banner-layer-middle banner-layer-left">
-                    <div class="container-fluid">
-                        <div class="appear-animate" data-animation-name="fadeInLeftShorter" data-animation-delay="200">
-                            <h2 class="font-weight-light ls-10 text-primary">Khám phá sự ra đời của chúng tôi</h2>
-                            <a href="demo23-shop.html" class="btn btn-link"><i>Xem sản phẩm của chúng tôi</i><i
-                                    class="fa-solid fa-angles-right"></i></a>
-                        </div>
+            <div class="banner-layer banner-layer-middle banner-layer-left">
+                <div class="container-fluid">
+                    <div class="appear-animate" data-animation-name="fadeInLeftShorter" data-animation-delay="200">
+                        <h2 class="font-weight-light ls-10 text-primary">Khám phá sự ra đời của chúng tôi</h2>
+                        <a href="<?=BASE_URL?>product" class="btn btn-link"><i>Xem sản phẩm của chúng tôi</i><i
+                                class="fa-solid fa-angles-right"></i></a>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
-        <!-- <div class="home-slide-2 banner">
-            <img class="slide-bg" src="upload/2.png" alt="slider image" width="1200" height="575">
+        </div>
+        <div class="home-slide-2 banner">
+            <img class="slide-bg" src="<?=BASE_URL?>public/upload/banners/<?= $showbanner[1]['AnhBanner'] ?>" alt="slider image" width="1200" height="400">
 
             <div class="banner-layer banner-layer-middle banner-layer-right w-100">
                 <div class="container-fluid">
                     <div class="col-6 offset-6 appear-animate" data-animation-name="fadeInRightShorter"
                         data-animation-delay="200">
                         <h2 class="font-weight-light ls-10 text-primary">Bộ sưu tập hợp thời trang</h2>
-                        <a href="demo23-shop.html" class="btn btn-link"><i>Xem sản phẩm đặc biệt của chúng tôi</i><i
+                        <a href="<?=BASE_URL?>product" class="btn btn-link"><i>Xem sản phẩm đặc biệt của chúng tôi</i><i
                                 class="fa-solid fa-angles-right"></i></a>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </section>
 
@@ -70,7 +67,7 @@ $proshow=new productModel;
                         <div class="text-justify">
                             <h3 class="font4 font-weight-bold ls-n-25 text-uppercase mb-1">GIẢM GIÁ</h3>
                             <h4 class="ls-n-25 text-uppercase">Lên đến 70%</h4>
-                            <a href="demo23-shop.html" class="btn btn-link"><i>Xem giao dịch của chúng tôi</i><i
+                            <a href="<?=BASE_URL?>product" class="btn btn-link"><i>Xem giao dịch của chúng tôi</i><i
                                     class="fa-solid fa-angles-right"></i></a>
                         </div>
                     </div>
@@ -85,7 +82,7 @@ $proshow=new productModel;
 
                     <div class="banner-layer d-flex flex-column align-items-center justify-content-end">
                         <h2 class="ls-n-25 text-uppercase">Nổi bật mùa hè</h2>
-                        <a href="demo23-shop.html" class="btn btn-link"><i>
+                        <a href="<?=BASE_URL?>product" class="btn btn-link"><i>
                                 Xem sản phẩm nổi bật của chúng tôi</i><i class="fa-solid fa-angles-right"></i></a>
                     </div>
                 </div>
@@ -100,7 +97,7 @@ $proshow=new productModel;
                     <div class="banner-layer d-flex flex-column align-items-center justify-content-between">
                         <h2 class="font-weight-bold ls-n-25 text-center text-uppercase">Mẹ &amp;
                             Bé gái</h2>
-                        <a href="demo23-shop.html" class="btn btn-link"><i>Xem trang phục của chúng tôi</i><i
+                        <a href="<?=BASE_URL?>product" class="btn btn-link"><i>Xem trang phục của chúng tôi</i><i
                                 class="fa-solid fa-angles-right"></i></a>
                     </div>
                 </div>
@@ -114,7 +111,7 @@ $proshow=new productModel;
 
                     <div class="banner-layer d-flex flex-column align-items-center">
                         <h2 class="ls-n-25 text-uppercase">Trang phục cho bé</h2>
-                        <a href="demo23-shop.html" class="btn btn-link"><i>Xem trang phục của chúng tôi</i><i
+                        <a href="<?=BASE_URL?>product" class="btn btn-link"><i>Xem trang phục của chúng tôi</i><i
                                 class="fa-solid fa-angles-right"></i></a>
                     </div>
                 </div>
@@ -128,7 +125,7 @@ $proshow=new productModel;
 
                     <div class="banner-layer d-flex flex-column align-items-center justify-content-between">
                         <h2 class="ls-n-25 text-uppercase">Váy trẻ em</h2>
-                        <a href="demo23-shop.html" class="btn btn-link"><i>Xem trang phục của chúng tôi</i><i
+                        <a href="<?=BASE_URL?>product" class="btn btn-link"><i>Xem trang phục của chúng tôi</i><i
                                 class="fa-solid fa-angles-right"></i></a>
                     </div>
                 </div>
@@ -142,7 +139,7 @@ $proshow=new productModel;
 
                     <div class="banner-layer d-flex flex-column align-items-center justify-content-between">
                         <h2 class="ls-n-25 text-uppercase">Giày cho bé</h2>
-                        <a href="demo23-shop.html" class="btn btn-link"><i>Xem ưu đãi của chúng tôi</i><i
+                        <a href="<?=BASE_URL?>product" class="btn btn-link"><i>Xem ưu đãi của chúng tôi</i><i
                                 class="fa-solid fa-angles-right"></i></a>
                     </div>
                 </div>
@@ -211,7 +208,7 @@ $proshow=new productModel;
                             }
                         }">
                 <div class="product-category" style="background-color: #d8dfe1;">
-                    <a href="demo23-shop.html">
+                    <a href="<?=BASE_URL?>product">
                         <figure>
                             <img src="<?=BASE_URL?>public/upload/products/cats/cat-1.jpg" alt="cat banner" width="500"
                                 height="400">
@@ -223,7 +220,7 @@ $proshow=new productModel;
                     </a>
                 </div>
                 <div class="product-category" style="background-color: #ebeae9;">
-                    <a href="demo23-shop.html">
+                    <a href="<?=BASE_URL?>product">
                         <figure>
                             <img src="<?=BASE_URL?>public/upload/products/cats/cat-3.jpg" alt="cat banner" width="500"
                                 height="400">
@@ -235,7 +232,7 @@ $proshow=new productModel;
                     </a>
                 </div>
                 <div class="product-category" style="background-color: #ead7d5;">
-                    <a href="demo23-shop.html">
+                    <a href="<?=BASE_URL?>product">
                         <figure>
                             <img src="<?=BASE_URL?>public/upload/products/cats/cat-2.jpg" alt="cat banner" width="500"
                                 height="400">

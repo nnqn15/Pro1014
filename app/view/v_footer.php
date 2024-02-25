@@ -137,48 +137,52 @@
             <span class="mobile-menu-close"><i class="fa fa-times"></i></span>
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
-                    <li><a href="<?=BASE_URL?>public/page/home">Trang chủ</a></li>
+                    <li><a href="<?=BASE_URL?>">Trang chủ</a></li>
                     <li>
                         <a href="">Danh mục</a>
                         <ul>
-                            <?php
-                            $kiemtra_dm = null; // Biến để theo dõi TenDM hiện tại
-                            foreach ($danhmuc as $item_dm):
-                                if ($item_dm['TenDM'] != $kiemtra_dm): // Kiểm tra nếu TenDM thay đổi
-                                    if ($kiemtra_dm != null): // Kiểm tra nếu không phải là lần đầu tiên
-                                        echo '</ul></li>'; // Đóng các thẻ ul và li trước đó
-                                    endif;
-                                    $kiemtra_dm = $item_dm['TenDM']; // Cập nhật TenDM hiện tại
-                                    ?>
-                                    <li>
-                                        <a href="<? $base_url ?>'category/detail/'<? $item_dm['MaDM'] ?>" class="nolink">
-                                            <?= $item_dm['TenDM'] ?>
-                                        </a>
-                                        <ul>
-                                        <?php endif; ?>
-                                        <li><a
-                                                href="<?=BASE_URL?>public/category/detail/<?= $item_dm['MaDM'] ?>/<?= $item_dm['MaDMC'] ?>">
-                                                <?= $item_dm['TenDMC'] ?>
-                                            </a></li>
-                                    <?php endforeach; ?>
+                        <?php
+                                        $danhmuc = $danhmucmuc;
+                                        foreach ($danhmucmuc as $item_dmmuc) {
+                                            // Điêu kiện để lấy danh mục cha
+                                            if ($item_dmmuc['MaDMC'] == 0) {
+                                        ?>
+
+                                                <li><a href="<?= BASE_URL ?>danhmuc/<?=create_slug($item_dmmuc['TenDM'])?>"><?= $item_dmmuc['TenDM'] ?></a>
+                                                    <ul>
+                                                        <?php foreach ($danhmuc as $item_dm) {
+                                                            if ($item_dm['MaDMC'] != 0 && $item_dm['MaDMC'] == $item_dmmuc['MaDM']) {
+                                                        ?>
+                                                                <li><a href="<?= BASE_URL ?>danhmuc/<?=create_slug($item_dmmuc['TenDM'])?>"><?= $item_dm['TenDM'] ?></a></li>
+                                                        <?php
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </ul>
+                                                </li>
+
+                                        <?php
+                                            }
+                                        }
+                                        ?>
                                 </ul>
                             </li>
                         </ul>
                     </li>
-                    <li><a href="<?=BASE_URL?>public/page/shop">Sản phẩm</a></li>
                 </ul>
 
                 <ul class="mobile-menu">
-                    <li><a href="<?=BASE_URL?>public/page/contact">Liên hệ</a></li>
-                    <li><a href="<?=BASE_URL?>public/page/aboutUs">Về chúng tôi</a></li>
-                    <li><a href="<?=BASE_URL?>public/page/wishlist">Yêu thích</a></li>
+                    <li><a href="<?=BASE_URL?>product">Sản phẩm</a></li>
+                    <li><a href="<?=BASE_URL?>contact">Liên hệ</a></li>
+                    <li><a href="<?=BASE_URL?>aboutUs">Về chúng tôi</a></li>
+                    <li><a href="<?=BASE_URL?>wishlist">Yêu thích</a></li>
                     <?php if (isset($_SESSION['user'])): ?>
-                    <li><a href="<?=BASE_URL?>public/gio-hang">Giỏ hàng</a></li>
-                    <li><a href="<?=BASE_URL?>public/user/dashboard">Tài khoản</a></li>
-                    <li><a href="<?php $base_url ?>logout" class="login-link">Đăng xuất</a></li>
+                    <li><a href="<?=BASE_URL?>cart">Giỏ hàng</a></li>
+                    <li><a href="<?=BASE_URL?>user">Tài khoản</a></li>
+                    <li><a href="<?=BASE_URL?>user/logout" class="login-link">Đăng xuất</a></li>
                     <?php else: ?>
-                    <li><a href="<?=BASE_URL?>public/user/login">Giỏ hàng</a></li>
-                    <li><a href="<?=BASE_URL?>public/user/login" class="login-link">Đăng nhập</a></li>
+                    <li><a href="<?=BASE_URL?>cart">Giỏ hàng</a></li>
+                    <li><a href="<?=BASE_URL?>user/login" class="login-link">Đăng nhập</a></li>
                     <?php endif; ?>
                 </ul>
             </nav>
@@ -187,28 +191,28 @@
 
     <div class="sticky-navbar">
         <div class="sticky-info">
-            <a href="<?=BASE_URL?>public/page/home">
+            <a href="<?=BASE_URL?>">
                 <i class="icon-home"></i>Trang chủ
             </a>
         </div>
         <div class="sticky-info">
-            <a href="<?=BASE_URL?>public/page/shop" class="">
+            <a href="<?=BASE_URL?>product" class="">
                 <i class="icon-wishlist-2"></i>Sản phẩm 
             </a>
         </div>
         <div class="sticky-info">
-            <a href="<?=BASE_URL?>public/page/wishlist" class="">
+            <a href="<?=BASE_URL?>wishlist" class="">
                 <i class="icon-wishlist-2"></i>Yêu thích 
             </a>
         </div>
         <?php if (isset($_SESSION['user'])): ?>
         <div class="sticky-info">
-            <a href="<?=BASE_URL?>public/user/login" class="">
+            <a href="<?=BASE_URL?>user" class="">
                 <i class="icon-user-2"></i>Tài khoản
             </a>
         </div>
         <div class="sticky-info">
-            <a href="<?=BASE_URL?>public/gio-hang" class="">
+            <a href="<?=BASE_URL?>cart" class="">
                 <i class="icon-shopping-cart position-relative">
                     <span class="cart-count badge-circle"><?=$count_cart?></span>
                 </i>Giỏ hàng
@@ -216,14 +220,14 @@
         </div>
         <?php else: ?>
         <div class="sticky-info">
-            <a href="<?=BASE_URL?>public/user/login" class="">
+            <a href="<?=BASE_URL?>cart" class="">
                 <i class="icon-shopping-cart position-relative">
                     <span class="cart-count badge-circle">0</span>
                 </i>Giỏ hàng
             </a>
         </div>
         <div class="sticky-info">
-            <a href="<?=BASE_URL?>public/user/login" class="">
+            <a href="<?=BASE_URL?>user/login" class="">
                 <i class="icon-user-2"></i>Đăng nhập
             </a>
         </div>

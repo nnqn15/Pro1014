@@ -53,14 +53,14 @@ $MaHD = $data["MaHD"];
                         <tr>
                             <td>
                                 <figure class="product-image-container m-auto">
-                                    <a href="<?= BASE_URL ?>product-detail&MaSP=<?= $product['MaSP'] ?>" class="product-image">
+                                    <a href="<?= BASE_URL ?>product/detail/<?=create_slug($product['TenSP'])  ?>" class="product-image">
                                         <img src="<?= BASE_URL ?>public/upload/products/<?= $product['AnhSP'] ?>" alt="product">
                                     </a>
                                 </figure>
                             </td>
                             <td>
                                 <h5 class="product-title">
-                                    <a href="<?= BASE_URL ?>product/detail/<?= $product['MaSP'] ?>"><?= $product['TenSP'] ?></a>
+                                    <a href="<?= BASE_URL ?>product/detail//<?=create_slug($product['TenSP'])  ?>"><?= $product['TenSP'] ?></a>
                                 </h5>
                             </td>
                             <?php if (!$product['GiaGiam']) : ?>
@@ -114,12 +114,4 @@ $MaHD = $data["MaHD"];
         </div>
     </div>
 </div>
-<script>
-function exportToPdf() {
-    const doc = new jsPDF();
-    const contentToPrint = document.querySelector('.order-content').innerHTML;
-    doc.fromHTML(contentToPrint, 10, 10);
-    doc.save('hoa-don.pdf');
-}
-</script>
 <?php require_once 'app/view/v_footer.php'; ?>
