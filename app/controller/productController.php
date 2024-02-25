@@ -283,7 +283,7 @@ class productController extends baseController
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
                 $mail->Username = 'nnqn15@gmail.com';
-                $mail->Password = 'cckdmqfppwkzfxku';
+                $mail->Password = '';
                 $mail->SMTPSecure = 'ssl';
                 $mail->Port = 465;
             
